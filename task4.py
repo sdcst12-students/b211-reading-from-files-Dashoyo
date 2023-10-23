@@ -12,14 +12,29 @@ Create a function that reads the specific value for a specific level and an armo
 
 """
 
-def target(lvl,ac):
-    return
+def target(lvl, ac):
+    try:
+        with open("task04.txt", "r") as file:
+            lines = file.readlines()
+            lvl -= 1
 
-
+            if 0 <= lvl < len(lines):
+                values = list(map(int, lines[lvl].split()))
+                if ac < -10:
+                    ac = -10
+                elif ac > 10:
+                    ac = 10
+                ac_index = 20 - abs(ac)
+                return values[ac_index]
+            else:
+                return None  
+    except FileNotFoundError:
+        return None  
 def tests():
-    assert target(3,7) == 23
-    assert target(9,-1) == 17
-    assert target(13,-10) == 20
+    assert target(3, 7) == 17
+    assert target(9, -1) == 20
+    assert target(13, -10) == 4
 
-if __name__=="__main__":
+if __name__ == "__main__":
     tests()
+
